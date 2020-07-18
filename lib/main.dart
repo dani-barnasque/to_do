@@ -94,7 +94,7 @@ class _HomeState extends State<Home> {
                       controller: _toDoController,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return null;
+                          return 'Please enter some text';
                         }
                         return null;
                       },
@@ -111,10 +111,7 @@ class _HomeState extends State<Home> {
                   textColor: Colors.white,
                   onPressed: () {
                     if (_formKey.currentState.validate()) {
-                      _addToDo;
-                    } else {
-                      Scaffold.of(context).showSnackBar(
-                          SnackBar(content: Text('Please return some text')));
+                      _addToDo();
                     }
                   },
                 ),
