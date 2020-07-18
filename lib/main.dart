@@ -18,6 +18,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController _toDoController = TextEditingController();
 
   List _toDoList = [];
@@ -86,11 +88,20 @@ class _HomeState extends State<Home> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: TextField(
-                    controller: _toDoController,
-                    decoration: InputDecoration(
-                      labelText: 'New Task',
-                      labelStyle: TextStyle(color: Colors.blueAccent),
+                  child: Form(
+                    key: _formKey,
+                    child: TextFormField(
+                      controller: _toDoController,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return null;
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                        labelText: 'New Task',
+                        labelStyle: TextStyle(color: Colors.blueAccent),
+                      ),
                     ),
                   ),
                 ),
@@ -98,7 +109,14 @@ class _HomeState extends State<Home> {
                   color: Colors.blueAccent,
                   child: Text('ADD'),
                   textColor: Colors.white,
-                  onPressed: _addToDo,
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      _addToDo;
+                    } else {
+                      Scaffold.of(context).showSnackBar(
+                          SnackBar(content: Text('Please return some text')));
+                    }
+                  },
                 ),
               ],
             ),
